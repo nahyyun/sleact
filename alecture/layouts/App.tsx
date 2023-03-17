@@ -1,7 +1,15 @@
 import React from 'react';
+import loadable from '@loadable/component';
+import { Routes, Route } from 'react-router-dom';
+
+const SignUp = loadable(() => import('@pages/SignUp'));
 
 const App = () => {
-  return <div></div>;
+  return (
+    <Routes>
+      <Route path="/signup" element={<SignUp />} />
+    </Routes>
+  );
 };
 
 export default App;
