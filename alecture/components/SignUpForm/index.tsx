@@ -19,7 +19,7 @@ const SignUpForm = () => {
     defaultValues: { email: '', nickname: '', password: '', passwordCheck: '' },
   });
 
-  const onSubmit = handleSubmit((formData) => {
+  const onSubmit = handleSubmit(({ passwordCheck, ...formData }) => {
     signUp(formData);
   });
 

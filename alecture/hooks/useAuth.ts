@@ -1,41 +1,65 @@
-import { AxiosInstance } from '../apis';
+import { useContext } from 'react';
+import axiosInstance from '../apis';
 import { ISignUpForm, ILoginForm } from '../types/form';
 import useRouter from './useRouter';
+import { AuthContext } from '../contexts/AuthContext';
 
 type SuccessResponse = 'ok';
 
-type Response = SuccessResponse | null;
-
 const useAuth = () => {
+  const { isLogin, setLoginStatus, user, setUser } = useContext(AuthContext);
+
   const { routeTo } = useRouter();
 
-  const signUp = async (formData: ISignUpForm) => {
+  const signUp = async (formData: Omit<ISignUpForm, 'passwordCheck'>) => {
     try {
-      const res = await AxiosInstance.post<Response>('/users', { body: JSON.stringify(formData) });
-      if (res) {
+      const res = await axiosInstance.post<SuccessResponse>('/users', formData);
+
+      if (res === 'ok') {
         // 회원가입 성공 스낵바
+
         routeTo('/login');
       }
     } catch (error) {
       // 회원가입 실패 스낵바 (동일 이메일)
+      console.log('catch error', error);
     }
   };
 
   const login = async (formData: ILoginForm) => {
     try {
-      const res = await AxiosInstance.post<Response>('/users/login', { body: JSON.stringify(formData) });
+      const res = await axiosInstance.post<IUser>('/users/login', formData);
+
       if (res) {
         // 로그인 성공 스낵바
-        routeTo('/');
+        setLoginStatus(true);
+        setUser(res);
+
+        routeTo('/workspace/channel');
       }
     } catch (error) {
       // 로그인 실패 스낵바 (email, pwd 불일치)
+      console.log('error', error);
     }
   };
 
+  const logout = async () => {
+    try {
+      const res = await axiosInstance.post<SuccessResponse>('/users/logout');
+      if (res === 'ok') {
+        routeTo('/login');
+      }
+    } catch (error) {}
+  };
+
   return {
+    isLogin,
+    setLoginStatus,
+    user,
+    setUser,
     signUp,
     login,
+    logout,
   };
 };
 

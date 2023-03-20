@@ -1,21 +1,34 @@
-import axios from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-export const AxiosInstance = axios.create({ baseURL: 'http://localhost:3095/api', withCredentials: true });
+interface CustomAxiosInstance extends AxiosInstance {
+  request<T>(config: AxiosRequestConfig): Promise<T>;
+  get<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
+  delete<T = any, R = AxiosResponse<T>>(url: string, config?: AxiosRequestConfig): Promise<R>;
+  post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
+  put<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
+}
 
-AxiosInstance.interceptors.request.use(
+const axiosInstance: CustomAxiosInstance = axios.create({
+  baseURL: 'http://localhost:3095/api',
+  withCredentials: true,
+});
+
+axiosInstance.interceptors.request.use(
   (config) => {
     return config;
   },
   (error) => {
-    return error;
+    return Promise.reject(error);
   },
 );
 
-AxiosInstance.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response) => {
     return response.data;
   },
-  (err) => {
-    return err;
+  (error) => {
+    return Promise.reject(error);
   },
 );
+
+export default axiosInstance;
