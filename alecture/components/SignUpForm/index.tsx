@@ -1,46 +1,33 @@
 import React from 'react';
 import InputWithLabel from '@components/InputWithLabel';
 import Button from '@components/Button';
-import { useForm } from 'react-hook-form';
-import * as S from './style';
-import REGEX from '@utils/regex';
 import { ISignUpForm } from '../../types/form';
 import useAuth from '../../hooks/useAuth';
+import { useForm } from 'react-hook-form';
+import RegisterOptions from '@utils/registerOptions';
+import * as S from './style';
 
 const SignUpForm = () => {
   const { signUp } = useAuth();
 
   const {
     register,
-    formState: { isValid, errors },
+    formState: { errors },
     handleSubmit,
   } = useForm<ISignUpForm>({
     mode: 'onChange',
     defaultValues: { email: '', nickname: '', password: '', passwordCheck: '' },
-    criteriaMode: 'all',
   });
 
   const onSubmit = handleSubmit((formData) => {
     signUp(formData);
   });
 
-  const emailRegister = register('email', {
-    required: { value: true, message: '이메일을 입력해주세요.' },
-    pattern: { value: REGEX.email, message: '이메일 형식이 올바르지 않습니다.' },
-  });
-
-  const nicknameRegister = register('nickname', {
-    required: { value: true, message: '닉네임을 입력해주세요.' },
-    minLength: { value: 4, message: '최소 4자리 이상을 입력해주세요.' },
-  });
-
-  const passwordRegister = register('password', {
-    required: { value: true, message: '비밀번호를 입력해주세요.' },
-    pattern: { value: REGEX.password, message: '영문과 숫자, 특수문자를 조합하여 8~15자리를 입력해주세요.' },
-  });
-
+  const emailRegister = register('email', RegisterOptions.signUp.email);
+  const nicknameRegister = register('nickname', RegisterOptions.signUp.nickname);
+  const passwordRegister = register('password', RegisterOptions.signUp.password);
   const passwordCheckRegister = register('passwordCheck', {
-    required: { value: true, message: '비밀번호를 입력해주세요.' },
+    ...RegisterOptions.signUp.passwordCheck,
     validate: (rePassword, { password }) => (rePassword !== password ? '비밀번호가 일치하지 않습니다.' : undefined),
   });
 
@@ -64,9 +51,7 @@ const SignUpForm = () => {
       />
       <S.Error>{errors.passwordCheck?.message}</S.Error>
 
-      <Button type="submit" disabled={!isValid}>
-        회원가입
-      </Button>
+      <Button type="submit">회원가입</Button>
     </S.Form>
   );
 };

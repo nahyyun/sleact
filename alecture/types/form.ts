@@ -4,3 +4,8 @@ export interface ISignUpForm {
   password: string;
   passwordCheck: string;
 }
+
+export interface ILoginForm {
+  email: string;
+  password: string;
+}

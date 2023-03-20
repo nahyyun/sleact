@@ -1,12 +1,13 @@
 import React, { forwardRef } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 import * as S from './style';
 
-type InputWithLabelProps = {
+interface InputWithLabelProps extends UseFormRegisterReturn {
   labelId: string;
   title: string;
   type: string;
   id: string;
-};
+}
 
 const InputWithLabel = forwardRef<HTMLInputElement, InputWithLabelProps>(
   ({ labelId, title, ...props }: InputWithLabelProps, ref) => {
