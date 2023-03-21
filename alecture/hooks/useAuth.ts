@@ -3,11 +3,12 @@ import axiosInstance from '../apis';
 import { ISignUpForm, ILoginForm } from '../types/form';
 import useRouter from './useRouter';
 import { AuthContext } from '../contexts/AuthContext';
+import { IUser } from '../types/user';
 
 type SuccessResponse = 'ok';
 
 const useAuth = () => {
-  const { isLogin, setLoginStatus, user, setUser } = useContext(AuthContext);
+  const { isLogin, user, setLoginStatus, setLogoutStatus } = useContext(AuthContext);
 
   const { routeTo } = useRouter();
 
@@ -32,8 +33,7 @@ const useAuth = () => {
 
       if (res) {
         // 로그인 성공 스낵바
-        setLoginStatus(true);
-        setUser(res);
+        setLoginStatus();
 
         routeTo('/workspace/channel');
       }
@@ -48,15 +48,17 @@ const useAuth = () => {
       const res = await axiosInstance.post<SuccessResponse>('/users/logout');
       if (res === 'ok') {
         routeTo('/login');
+
+        setLogoutStatus();
       }
     } catch (error) {}
   };
 
   return {
     isLogin,
-    setLoginStatus,
     user,
-    setUser,
+    setLoginStatus,
+    setLogoutStatus,
     signUp,
     login,
     logout,

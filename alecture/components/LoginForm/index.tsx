@@ -1,8 +1,8 @@
-import InputWithLabel from '@components/InputWithLabel';
+import InputWithLabel from '@components/common/InputWithLabel';
 import React from 'react';
 import useAuth from '../../hooks/useAuth';
 import { ILoginForm } from 'types/form';
-import Button from '@components/Button';
+import Button from '@components/common/Button';
 import { useForm } from 'react-hook-form';
 import RegisterOptions from '../../utils/registerOptions';
 import * as S from './style';

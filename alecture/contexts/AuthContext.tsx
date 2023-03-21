@@ -1,19 +1,42 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
+import { IUser } from '../types/user';
+import axiosInstance from '../apis';
 
-export const AuthContext = createContext({
+export interface IAuthContext {
+  isLogin: boolean;
+  user: IUser | null;
+  setLoginStatus: () => void;
+  setLogoutStatus: () => void;
+}
+
+export const AuthContext = createContext<IAuthContext>({
   isLogin: false,
-  setLoginStatus: (status: boolean) => {},
-  user: { email: '', nickname: '', id: 0 },
-  setUser: (user: IUser) => {},
+  user: null,
+  setLoginStatus: () => {},
+  setLogoutStatus: () => {},
 });
 
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isLogin, setIsLogin] = useState(document.cookie ? true : false);
-  const [user, setUser] = useState<IUser>({ email: '', nickname: '', id: 0 });
+  const [isLogin, setIsLogin] = useState(false);
+  const [user, setUser] = useState<IUser | null>(null);
 
-  const setLoginStatus = (status: boolean) => {
-    setIsLogin(status);
+  const setLoginStatus = async () => {
+    const userInfo = await axiosInstance.get<IUser>('/users');
+
+    setIsLogin(true);
+    setUser(userInfo);
   };
 
-  return <AuthContext.Provider value={{ isLogin, setLoginStatus, user, setUser }}>{children}</AuthContext.Provider>;
+  const setLogoutStatus = () => {
+    setIsLogin(false);
+    setUser(null);
+  };
+
+  useEffect(() => {
+    setLoginStatus();
+  }, []);
+
+  return (
+    <AuthContext.Provider value={{ isLogin, user, setLoginStatus, setLogoutStatus }}>{children}</AuthContext.Provider>
+  );
 };

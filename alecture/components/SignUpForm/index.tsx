@@ -1,6 +1,6 @@
 import React from 'react';
-import InputWithLabel from '@components/InputWithLabel';
-import Button from '@components/Button';
+import InputWithLabel from '@components/common/InputWithLabel';
+import Button from '@components/common/Button';
 import { ISignUpForm } from '../../types/form';
 import useAuth from '../../hooks/useAuth';
 import { useForm } from 'react-hook-form';
