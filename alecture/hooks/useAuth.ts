@@ -3,7 +3,7 @@ import axiosInstance from '../apis';
 import { ISignUpForm, ILoginForm } from '../types/form';
 import useRouter from './useRouter';
 import { AuthContext } from '../contexts/AuthContext';
-import { IUser } from '../types/user';
+import { IUser } from '../types';
 
 type SuccessResponse = 'ok';
 

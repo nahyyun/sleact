@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { IUser } from '../types/user';
+import { IUser } from '../types';
 import axiosInstance from '../apis';
 
 export interface IAuthContext {
