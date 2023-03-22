@@ -1,3 +1,4 @@
+import Dimmer from '@components/common/Dimmer';
 import React from 'react';
 import * as S from './style';
 
@@ -11,10 +12,10 @@ const MenuWrapper = ({ children, isOpen, onCloseMenu }: MenuProps) => {
   if (!isOpen) return null;
 
   return (
-    <S.Menu>
-      <div className="back" onClick={onCloseMenu} />
-      {children}
-    </S.Menu>
+    <>
+      <Dimmer onClick={onCloseMenu} backgroundOpacity="none" />
+      <S.Menu>{children}</S.Menu>
+    </>
   );
 };
 

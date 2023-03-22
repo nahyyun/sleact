@@ -1,6 +1,7 @@
 import React from 'react';
-import Button from '../Button';
-import Portal from '../Portal';
+import Button from '@components/common/Button';
+import Dimmer from '@components/common/Dimmer';
+import Portal from '@components/common/Portal';
 import * as S from './style';
 
 interface ModalProps {
@@ -24,7 +25,7 @@ const ModalWrapper = ({ children, isOpen, onCloseModal }: ModalProps) => {
 
   return (
     <Portal targetElement={modalRootElement}>
-      <S.Dimmer onClick={onCloseModal} />
+      <Dimmer onClick={onCloseModal} backgroundOpacity="0.5" />
       <S.ModalContainer>
         <Button onClick={onCloseModal}>X</Button>
         {children}

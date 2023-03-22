@@ -15,17 +15,17 @@ const Header = () => {
     <S.Header>
       <S.RightMenu onClick={openUserProfileMenu}>
         <S.ProfileImg src={profileImgUrl} alt={user!.nickname} />
-        <Menu isOpen={isOpen} onCloseMenu={closeUserProfileMenu}>
-          <S.ProfileMenu>
-            <img src={profileImgUrl} alt={user!.nickname} />
-            <div>
-              <span id="profile-name">{user!.nickname}</span>
-              <span id="profile-active">Active</span>
-            </div>
-          </S.ProfileMenu>
-          <S.LogOutButton onClick={logout}>로그아웃</S.LogOutButton>
-        </Menu>
       </S.RightMenu>
+      <Menu isOpen={isOpen} onCloseMenu={closeUserProfileMenu}>
+        <S.ProfileMenu>
+          <img src={profileImgUrl} alt={user!.nickname} />
+          <div>
+            <span id="profile-name">{user!.nickname}</span>
+            <span id="profile-active">Active</span>
+          </div>
+        </S.ProfileMenu>
+        <S.LogOutButton onClick={logout}>로그아웃</S.LogOutButton>
+      </Menu>
     </S.Header>
   );
 };
