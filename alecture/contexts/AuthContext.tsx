@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { IUser } from '../types';
-import useFetch from '../hooks/useFetch';
+import useFetch from '@hooks/useFetch';
 
 export interface IAuthContext {
   isLogin: boolean;
