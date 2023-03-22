@@ -9,7 +9,7 @@ interface IReducerState<T> {
 
 const defaultFetchReducer: IReducerState<unknown> = {
   isLoading: false,
-  responseData: false,
+  responseData: null,
   error: '',
 };
 

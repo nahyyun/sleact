@@ -3,9 +3,9 @@ import React from 'react';
 import { IWorkspace, IWorkspaceForm } from 'types';
 
 const useWorkspace = () => {
-  const createWorkspace = (data: IWorkspaceForm) => {
+  const createWorkspace = async (data: IWorkspaceForm) => {
     try {
-      axiosInstance.post<IWorkspace>('/workspaces', data);
+      await axiosInstance.post<IWorkspace>('/workspaces', data);
     } catch (error) {
       console.log(error);
     }

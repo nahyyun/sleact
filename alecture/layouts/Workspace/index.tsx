@@ -5,6 +5,7 @@ import * as S from './style';
 import { Outlet } from 'react-router-dom';
 import Header from '@layouts/Header';
 import Workspaces from '@components/Workspaces';
+import Channel from '@components/Channel';
 
 const Workspace = () => {
   const { logout } = useAuth();
@@ -14,10 +15,7 @@ const Workspace = () => {
       <Header />
       <S.WorkspaceWrapper>
         <Workspaces />
-        <S.Channels>
-          <S.WorkspaceName>Sleact</S.WorkspaceName>
-          <S.MenuScroll>menu scroll</S.MenuScroll>
-        </S.Channels>
+        <Channel />
         <S.Chats>chats</S.Chats>
       </S.WorkspaceWrapper>
 

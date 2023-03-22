@@ -1,17 +1,20 @@
 import Button from '@components/common/Button';
 import InputWithLabel from '@components/common/InputWithLabel';
 import { Modal } from '@components/common/Modal';
-import useAuth from '@hooks/useAuth';
 import useModal from '@hooks/useModal';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
 import * as S from './style';
 import useWorkspace from '@hooks/useWorkspace';
+import useFetch from '../../hooks/useFetch';
+import { IWorkspace } from '../../types/index';
 
 const Workspaces = () => {
   const { isOpen, openModal, closeModal } = useModal();
-  const { user } = useAuth();
+
+  const { fetch, responseData: workspaces } = useFetch<IWorkspace[]>('/workspaces');
+
   const { createWorkspace } = useWorkspace();
 
   const { register, handleSubmit } = useForm({
@@ -27,8 +30,9 @@ const Workspaces = () => {
     required: { value: true, message: '워크스페이스 url을 입력해주시기 바랍니다.' },
   });
 
-  const onSubmit = handleSubmit((formData) => {
-    createWorkspace(formData);
+  const onSubmit = handleSubmit(async (formData) => {
+    await createWorkspace(formData);
+    fetch();
     closeModal();
   });
 
@@ -36,10 +40,12 @@ const Workspaces = () => {
     openModal();
   };
 
+  if (!workspaces) return null;
+
   return (
     <>
       <S.Workspaces>
-        {user?.Workspaces?.map((ws) => (
+        {workspaces?.map((ws) => (
           <NavLink key={ws.id} to={`/workspace/${123}/channel`}>
             <S.WorkspaceButton>{ws.name.slice(0, 1).toUpperCase()}</S.WorkspaceButton>
           </NavLink>
