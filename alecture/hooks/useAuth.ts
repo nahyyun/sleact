@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import axiosInstance from '../apis';
-import { ISignUpForm, ILoginForm } from '../types/form';
+import { ISignUpForm, ILoginForm } from '../types';
 import useRouter from './useRouter';
 import { AuthContext } from '../contexts/AuthContext';
 import { IUser } from '../types';

@@ -1,3 +1,20 @@
+export interface ISignUpForm {
+  email: string;
+  nickname: string;
+  password: string;
+  passwordCheck: string;
+}
+
+export interface ILoginForm {
+  email: string;
+  password: string;
+}
+
+export interface IWorkspaceForm {
+  workspace: string;
+  url: string;
+}
+
 export interface IUser {
   id: number;
   nickname: string;

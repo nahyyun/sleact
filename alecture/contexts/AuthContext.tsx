@@ -1,6 +1,6 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { IUser } from '../types';
-import axiosInstance from '../apis';
+import useFetch from '../hooks/useFetch';
 
 export interface IAuthContext {
   isLogin: boolean;
@@ -18,25 +18,23 @@ export const AuthContext = createContext<IAuthContext>({
 
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLogin, setIsLogin] = useState(false);
-  const [user, setUser] = useState<IUser | null>(null);
+  const { responseData } = useFetch<IUser>('/users');
 
   const setLoginStatus = async () => {
-    const userInfo = await axiosInstance.get<IUser>('/users');
-
     setIsLogin(true);
-    setUser(userInfo);
   };
 
   const setLogoutStatus = () => {
     setIsLogin(false);
-    setUser(null);
   };
 
   useEffect(() => {
-    setLoginStatus();
-  }, []);
+    setIsLogin(responseData ? true : false);
+  }, [responseData]);
 
   return (
-    <AuthContext.Provider value={{ isLogin, user, setLoginStatus, setLogoutStatus }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ isLogin, user: responseData, setLoginStatus, setLogoutStatus }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
