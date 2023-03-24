@@ -68,7 +68,6 @@ const useFetch = <T>(
   };
 
   useEffect(() => {
-    console.log('useFetch effect isLoading', state.isLoading);
     fetch();
   }, []);
 
