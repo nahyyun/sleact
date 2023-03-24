@@ -11,8 +11,17 @@ const useChannel = () => {
     }
   };
 
+  const inviteChannel = async (workspace: string, channel: string, data: IChannelForm) => {
+    try {
+      await axiosInstance.post<'ok'>(`//workspaces/${workspace}/channels/${channel}/members`, data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     createChannel,
+    inviteChannel,
   };
 };
 

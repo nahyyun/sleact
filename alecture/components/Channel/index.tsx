@@ -12,10 +12,18 @@ import useChannel from '@hooks/useChannel';
 import { useParams } from 'react-router-dom';
 import useFetch from '@hooks/useFetch';
 import { IChannel } from '../../types';
+import InviteWorkspaceModal from '@components/Channel/InviteWorkspaceModal';
+import InviteChannelModal from '@components/Channel/InviteChannelModal';
+import ChannelList from '@components/Channel/ChannelList';
 
 const Channel = () => {
   const { isOpen: isMenuOpen, openMenu: openChannelMenu, closeMenu: closeChannelMenu } = useMenu();
-  const { isOpen: isModalOpen, openModal: openCreateChannelModal, closeModal: closeCreateChannelModal } = useModal();
+  const {
+    isOpen: isCreateChannelModalOpen,
+    openModal: openCreateChannelModal,
+    closeModal: closeCreateChannelModal,
+  } = useModal();
+  const { isOpen: isInviteWSModalOpen, openModal: openInviteWSModal, closeModal: closeInviteWSModal } = useModal();
 
   const { logout } = useAuth();
   const { createChannel } = useChannel();
@@ -33,6 +41,10 @@ const Channel = () => {
     required: { value: true, message: '워크스페이스 이름을 입력해주시기 바랍니다.' },
   });
 
+  const inviteWorkspace = () => {
+    openInviteWSModal();
+  };
+
   const onSubmit = handleSubmit(async (formData) => {
     await createChannel(workspace, formData);
     fetch();
@@ -47,7 +59,7 @@ const Channel = () => {
           <Menu isOpen={isMenuOpen} onCloseMenu={closeChannelMenu}>
             <Menu.Items>
               <Menu.Item>
-                <Button>워크 스페이스에 사용자 초대</Button>
+                <Button onClick={inviteWorkspace}>워크 스페이스에 사용자 초대</Button>
               </Menu.Item>
               <Menu.Item>
                 <Button onClick={openCreateChannelModal}>채널 만들기</Button>
@@ -57,11 +69,11 @@ const Channel = () => {
               </Menu.Item>
             </Menu.Items>
           </Menu>
-          {channels?.map((channel) => channel.name)}
+          <ChannelList channels={channels} />
         </S.MenuScroll>
       </S.Channels>
 
-      <Modal isOpen={isModalOpen} onCloseModal={closeCreateChannelModal}>
+      <Modal isOpen={isCreateChannelModalOpen} onCloseModal={closeCreateChannelModal}>
         <Modal.Header>채널 생성</Modal.Header>
         <Modal.Dialog>
           <form onSubmit={onSubmit}>
@@ -70,6 +82,9 @@ const Channel = () => {
           </form>
         </Modal.Dialog>
       </Modal>
+
+      <InviteWorkspaceModal workspace={workspace} isOpen={isInviteWSModalOpen} onCloseModal={closeInviteWSModal} />
+      <InviteChannelModal workspace={workspace} isOpen={isInviteWSModalOpen} onCloseModal={closeInviteWSModal} />
     </>
   );
 };

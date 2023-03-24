@@ -15,6 +15,10 @@ export interface IWorkspaceForm {
   url: string;
 }
 
+export interface IInviteWorkspaceForm {
+  email: string;
+}
+
 export interface IChannelForm {
   name: string;
 }
