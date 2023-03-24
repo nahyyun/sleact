@@ -12,14 +12,15 @@ const Channel = loadable(() => import('@pages/Channel'));
 const App = () => {
   return (
     <Routes>
+      <Route element={<ProtectedRouter />}>
+        <Route path="/workspace/:workspacename" element={<Workspace />}>
+          <Route path="channel/:channel" element={<Channel />} />
+          <Route index element={<div>not found</div>} />
+        </Route>
+      </Route>
       <Route element={<PublicRouter />}>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-      </Route>
-      <Route element={<ProtectedRouter />}>
-        <Route element={<Workspace />}>
-          <Route path="/workspace/channel" element={<Channel />} />
-        </Route>
       </Route>
     </Routes>
   );

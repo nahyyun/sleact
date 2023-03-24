@@ -15,6 +15,10 @@ export interface IWorkspaceForm {
   url: string;
 }
 
+export interface IChannelForm {
+  name: string;
+}
+
 export interface IUser {
   id: number;
   nickname: string;

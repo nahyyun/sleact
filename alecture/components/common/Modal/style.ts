@@ -16,6 +16,8 @@ export const ModalHeader = styled.div`
 
 export const ModalDialog = styled.div``;
 
+export const ModalButton = styled.button``;
+
 export const CloseModalButton = styled.button`
   position: absolute;
   right: 10px;

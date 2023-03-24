@@ -6,21 +6,24 @@ import Menu from '@components/Menu';
 import useMenu from '@hooks/useMenu';
 
 const Header = () => {
-  const { logout, user } = useAuth();
+  const {
+    logout,
+    user: { isLoading, userInfo },
+  } = useAuth();
   const { isOpen, openMenu: openUserProfileMenu, closeMenu: closeUserProfileMenu } = useMenu();
 
-  const profileImgUrl = gravatar.url(user!.email, { s: '20px', d: 'retro' });
+  const profileImgUrl = gravatar.url(userInfo!.email, { s: '20px', d: 'retro' });
 
   return (
     <S.Header>
       <S.RightMenu onClick={openUserProfileMenu}>
-        <S.ProfileImg src={profileImgUrl} alt={user!.nickname} />
+        <S.ProfileImg src={profileImgUrl} alt={userInfo!.nickname} />
       </S.RightMenu>
       <Menu isOpen={isOpen} onCloseMenu={closeUserProfileMenu}>
         <S.ProfileMenu>
-          <img src={profileImgUrl} alt={user!.nickname} />
+          <img src={profileImgUrl} alt={userInfo!.nickname} />
           <div>
-            <span id="profile-name">{user!.nickname}</span>
+            <span id="profile-name">{userInfo!.nickname}</span>
             <span id="profile-active">Active</span>
           </div>
         </S.ProfileMenu>

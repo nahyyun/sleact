@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
 import * as S from './style';
 import useWorkspace from '@hooks/useWorkspace';
-import useFetch from '../../hooks/useFetch';
+import useFetch from '@hooks/useFetch';
 import { IWorkspace } from '../../types/index';
 
 const Workspaces = () => {
@@ -46,7 +46,7 @@ const Workspaces = () => {
     <>
       <S.Workspaces>
         {workspaces?.map((ws) => (
-          <NavLink key={ws.id} to={`/workspace/${123}/channel`}>
+          <NavLink key={ws.id} to={`/workspace/${ws.name}/channel`}>
             <S.WorkspaceButton>{ws.name.slice(0, 1).toUpperCase()}</S.WorkspaceButton>
           </NavLink>
         ))}

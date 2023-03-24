@@ -8,7 +8,7 @@ interface IReducerState<T> {
 }
 
 const defaultFetchReducer: IReducerState<unknown> = {
-  isLoading: false,
+  isLoading: true,
   responseData: null,
   error: '',
 };
@@ -44,6 +44,7 @@ const fetchReducer = <T>(state: IReducerState<T>, action: Action<T>): IReducerSt
 const useFetch = <T>(
   url: string,
 ): {
+  isLoading: boolean;
   responseData: T;
   fetch: () => Promise<T>;
 } => {
@@ -67,10 +68,11 @@ const useFetch = <T>(
   };
 
   useEffect(() => {
+    console.log('useFetch effect isLoading', state.isLoading);
     fetch();
   }, []);
 
-  return { responseData: state.responseData, fetch };
+  return { isLoading: state.isLoading, responseData: state.responseData, fetch };
 };
 
 export default useFetch;

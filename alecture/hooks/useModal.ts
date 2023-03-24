@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const useModal = () => {
+const useModal = (immediate?: boolean) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => {
@@ -10,6 +10,12 @@ const useModal = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    if (!immediate) return;
+
+    openModal();
+  }, []);
 
   return { isOpen, openModal, closeModal };
 };

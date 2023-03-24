@@ -1,39 +1,30 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext } from 'react';
 import { IUser } from '../types';
 import useFetch from '@hooks/useFetch';
 
 export interface IAuthContext {
   isLogin: boolean;
-  user: IUser | null;
-  setLoginStatus: () => void;
-  setLogoutStatus: () => void;
+  user: { isLoading: boolean; responseData: IUser | null };
+  fetch: () => Promise<IUser>;
 }
 
 export const AuthContext = createContext<IAuthContext>({
   isLogin: false,
-  user: null,
-  setLoginStatus: () => {},
-  setLogoutStatus: () => {},
+  user: { isLoading: false, responseData: null },
+  fetch: () => Promise.resolve({} as IUser),
 });
 
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isLogin, setIsLogin] = useState(false);
-  const { responseData } = useFetch<IUser>('/users');
-
-  const setLoginStatus = async () => {
-    setIsLogin(true);
-  };
-
-  const setLogoutStatus = () => {
-    setIsLogin(false);
-  };
-
-  useEffect(() => {
-    setIsLogin(responseData ? true : false);
-  }, [responseData]);
+  const { isLoading, responseData, fetch } = useFetch<IUser>('/users');
 
   return (
-    <AuthContext.Provider value={{ isLogin, user: responseData, setLoginStatus, setLogoutStatus }}>
+    <AuthContext.Provider
+      value={{
+        isLogin: responseData?.nickname ? true : false,
+        user: { isLoading, responseData },
+        fetch,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
