@@ -9,13 +9,16 @@ import Menu from '@components/Menu';
 const Workspace = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
-  const { logout, user } = useAuth();
+  const {
+    logout,
+    user: { userInfo },
+  } = useAuth();
 
   const onLogout = () => {
     logout();
   };
 
-  const profileImgUrl = gravatar.url(user!.email, { s: '20px', d: 'retro' });
+  const profileImgUrl = gravatar.url(userInfo!.email, { s: '20px', d: 'retro' });
   const onClickUserProfile = () => {
     setShowProfileMenu((prev) => {
       console.log(prev);
@@ -28,13 +31,13 @@ const Workspace = () => {
       <S.Header>
         <S.RightMenu>
           <span onClick={onClickUserProfile}>
-            <S.ProfileImg src={profileImgUrl} alt={user!.nickname} />
+            <S.ProfileImg src={profileImgUrl} alt={userInfo!.nickname} />
             {showProfileMenu && (
-              <Menu isShow={showProfileMenu} onCloseMenu={onClickUserProfile}>
+              <Menu isOpen={showProfileMenu} onCloseMenu={onClickUserProfile}>
                 <S.ProfileModal>
-                  <img src={profileImgUrl} alt={user!.nickname} />
+                  <img src={profileImgUrl} alt={userInfo!.nickname} />
                   <div>
-                    <span id="profile-name">{user!.nickname}</span>
+                    <span id="profile-name">{userInfo!.nickname}</span>
                     <span id="profile-active">Active</span>
                   </div>
                 </S.ProfileModal>
