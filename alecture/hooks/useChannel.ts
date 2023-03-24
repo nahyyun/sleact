@@ -5,7 +5,7 @@ import { IChannel, IChannelForm } from 'types';
 const useChannel = () => {
   const createChannel = async (workspace: string, data: IChannelForm) => {
     try {
-      await axiosInstance.post<IChannel>(`/workspaces/:${workspace}/channels`, data);
+      await axiosInstance.post<IChannel>(`/workspaces/${workspace}/channels`, data);
     } catch (error) {
       console.log(error);
     }

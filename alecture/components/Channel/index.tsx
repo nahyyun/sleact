@@ -21,9 +21,9 @@ const Channel = () => {
   const { createChannel } = useChannel();
 
   const { workspace } = useParams<{ workspace: string }>() as { workspace: string };
-  console.log('path workspace', workspace);
-  //const { fetch, responseData: channels } = useFetch<IChannel[]>(`/workspaces/${workspace}/channels`);
-  // console.log(channels);
+
+  const { fetch, responseData: channels } = useFetch<IChannel[]>(`/workspaces/${workspace}/channels`);
+
   const { register, handleSubmit } = useForm({
     mode: 'onSubmit',
     defaultValues: { name: '' },
@@ -35,6 +35,7 @@ const Channel = () => {
 
   const onSubmit = handleSubmit(async (formData) => {
     await createChannel(workspace, formData);
+    fetch();
     closeCreateChannelModal();
   });
 
@@ -42,7 +43,6 @@ const Channel = () => {
     <>
       <S.Channels>
         <S.WorkspaceName onClick={openChannelMenu}>Sleact</S.WorkspaceName>
-
         <S.MenuScroll>
           <Menu isOpen={isMenuOpen} onCloseMenu={closeChannelMenu}>
             <Menu.Items>
@@ -57,6 +57,7 @@ const Channel = () => {
               </Menu.Item>
             </Menu.Items>
           </Menu>
+          {channels?.map((channel) => channel.name)}
         </S.MenuScroll>
       </S.Channels>
 

@@ -16,7 +16,7 @@ const Workspace = () => {
   const { workspace } = useParams();
 
   const match = userInfo?.Workspaces.find((ws) => ws.name === workspace);
-  console.log(isLogin);
+
   return (
     <div>
       <Header />
