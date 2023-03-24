@@ -1,21 +1,35 @@
+import Dimmer from '@components/common/Dimmer';
 import React from 'react';
 import * as S from './style';
 
-type MenuProps = {
+interface MenuProps {
   children: React.ReactNode;
-  isShow: boolean;
+  isOpen: boolean;
   onCloseMenu: () => void;
-};
+}
 
-const Menu = ({ children, isShow, onCloseMenu }: MenuProps) => {
+const MenuWrapper = ({ children, isOpen, onCloseMenu }: MenuProps) => {
+  if (!isOpen) return null;
+
   return (
-    <S.CreateMenu>
-      <div onClick={(e) => e.stopPropagation()}>
-        <S.CloseModalButton onClick={onCloseMenu}>X</S.CloseModalButton>
-        {children}
-      </div>
-    </S.CreateMenu>
+    <>
+      <Dimmer onClick={onCloseMenu} backgroundOpacity="none" />
+      <S.Menu>{children}</S.Menu>
+    </>
   );
 };
+
+const Items = ({ children }: { children: React.ReactNode }) => {
+  return <ul>{children}</ul>;
+};
+
+const Item = ({ children }: { children: React.ReactNode }) => {
+  return <li>{children}</li>;
+};
+
+const Menu = Object.assign(MenuWrapper, {
+  Items,
+  Item,
+});
 
 export default Menu;

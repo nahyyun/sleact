@@ -25,11 +25,6 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
       </Route>
-      <Route element={<ProtectedRouter />}>
-        <Route element={<Workspace />}>
-          <Route path="/workspace/channel" element={<Channel />} />
-        </Route>
-      </Route>
     </Routes>
   );
 };

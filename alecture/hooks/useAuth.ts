@@ -1,14 +1,18 @@
 import { useContext } from 'react';
 import axiosInstance from '../apis';
-import { ISignUpForm, ILoginForm } from '../types/form';
+import { ISignUpForm, ILoginForm } from '../types';
 import useRouter from './useRouter';
 import { AuthContext } from '../contexts/AuthContext';
-import { IUser } from '../types/user';
+import { IUser } from '../types';
 
 type SuccessResponse = 'ok';
 
 const useAuth = () => {
-  const { isLogin, user, setLoginStatus, setLogoutStatus } = useContext(AuthContext);
+  const {
+    isLogin,
+    user: { isLoading, responseData: userInfo },
+    fetch,
+  } = useContext(AuthContext);
 
   const { routeTo } = useRouter();
 
@@ -33,9 +37,8 @@ const useAuth = () => {
 
       if (res) {
         // 로그인 성공 스낵바
-        setLoginStatus();
-
-        routeTo('/workspace/channel');
+        const userInfoRes = await fetch();
+        routeTo(`/workspace/${userInfoRes.Workspaces[0].name}`);
       }
     } catch (error) {
       // 로그인 실패 스낵바 (email, pwd 불일치)
@@ -48,17 +51,14 @@ const useAuth = () => {
       const res = await axiosInstance.post<SuccessResponse>('/users/logout');
       if (res === 'ok') {
         routeTo('/login');
-
-        setLogoutStatus();
+        fetch();
       }
     } catch (error) {}
   };
 
   return {
     isLogin,
-    user,
-    setLoginStatus,
-    setLogoutStatus,
+    user: { isLoading, userInfo },
     signUp,
     login,
     logout,

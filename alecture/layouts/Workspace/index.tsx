@@ -1,62 +1,33 @@
 import Button from '@components/common/Button';
-import React, { useState } from 'react';
+import React from 'react';
 import useAuth from '../../hooks/useAuth';
-import gravatar from 'gravatar';
 import * as S from './style';
-import { Outlet } from 'react-router-dom';
-import Menu from '@components/Menu';
+import { Outlet, useParams } from 'react-router-dom';
+import Header from '@layouts/Header';
+import Workspaces from '@components/Workspaces';
+import Channel from '@components/Channel';
 
 const Workspace = () => {
-  const [showProfileMenu, setShowProfileMenu] = useState(false);
-
   const {
     logout,
-    user: { userInfo },
+    user: { isLoading, userInfo },
+    isLogin,
   } = useAuth();
+  const { workspace } = useParams();
 
-  const onLogout = () => {
-    logout();
-  };
-
-  const profileImgUrl = gravatar.url(userInfo!.email, { s: '20px', d: 'retro' });
-  const onClickUserProfile = () => {
-    setShowProfileMenu((prev) => {
-      console.log(prev);
-      return !prev;
-    });
-  };
-
+  const match = userInfo?.Workspaces.find((ws) => ws.name === workspace);
+  console.log(isLogin);
   return (
     <div>
-      <S.Header>
-        <S.RightMenu>
-          <span onClick={onClickUserProfile}>
-            <S.ProfileImg src={profileImgUrl} alt={userInfo!.nickname} />
-            {showProfileMenu && (
-              <Menu isOpen={showProfileMenu} onCloseMenu={onClickUserProfile}>
-                <S.ProfileModal>
-                  <img src={profileImgUrl} alt={userInfo!.nickname} />
-                  <div>
-                    <span id="profile-name">{userInfo!.nickname}</span>
-                    <span id="profile-active">Active</span>
-                  </div>
-                </S.ProfileModal>
-                <S.LogOutButton onClick={logout}>로그아웃</S.LogOutButton>
-              </Menu>
-            )}
-          </span>
-        </S.RightMenu>
-      </S.Header>
+      <Header />
       <S.WorkspaceWrapper>
-        <S.Workspaces>test</S.Workspaces>
-        <S.Channels>
-          <S.WorkspaceName>Sleact</S.WorkspaceName>
-          <S.MenuScroll>menu scroll</S.MenuScroll>
-        </S.Channels>
+        <Workspaces />
+        {match && <Channel />}
         <S.Chats>chats</S.Chats>
       </S.WorkspaceWrapper>
-      <Button onClick={onLogout}>로그아웃</Button>
-      <Outlet />
+
+      <Button onClick={logout}>로그아웃</Button>
+      {match && <Outlet />}
     </div>
   );
 };
