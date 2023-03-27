@@ -1,12 +1,9 @@
 import styled from '@emotion/styled';
 
 export const Channels = styled.nav`
-  width: 260px;
   display: inline-flex;
   flex-direction: column;
-  background: #3f0e40;
-  color: rgb(188, 171, 188);
-  vertical-align: top;
+  width: 100%;
 
   & a {
     padding-left: 36px;
@@ -74,6 +71,5 @@ export const WorkspaceName = styled.button`
 `;
 
 export const MenuScroll = styled.div`
-  height: calc(100vh - 102px);
   overflow-y: auto;
 `;

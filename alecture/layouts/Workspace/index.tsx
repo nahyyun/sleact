@@ -6,6 +6,7 @@ import { Outlet, useParams } from 'react-router-dom';
 import Header from '@layouts/Header';
 import Workspaces from '@components/Workspaces';
 import ChannelWrapper from '@components/ChannelWrapper';
+import DMList from '@components/DMList';
 
 const Workspace = () => {
   const {
@@ -13,7 +14,8 @@ const Workspace = () => {
     user: { isLoading, userInfo },
     isLogin,
   } = useAuth();
-  const { workspace } = useParams();
+
+  const { workspace } = useParams<{ workspace: string }>() as { workspace: string };
 
   const match = userInfo?.Workspaces.find((ws) => ws.name === workspace);
 
@@ -22,7 +24,12 @@ const Workspace = () => {
       <Header />
       <S.WorkspaceSidebarWrapper>
         <Workspaces />
-        {match && <ChannelWrapper />}
+        {match && (
+          <S.ChannelAndDMWrapper>
+            <ChannelWrapper />
+            <DMList workspace={workspace} />
+          </S.ChannelAndDMWrapper>
+        )}
         <S.Chats>chats</S.Chats>
       </S.WorkspaceSidebarWrapper>
 

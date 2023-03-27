@@ -9,7 +9,7 @@ interface CustomAxiosInstance extends AxiosInstance {
 }
 
 const axiosInstance: CustomAxiosInstance = axios.create({
-  baseURL: 'http://localhost:3095/api',
+  baseURL: '/api',
   withCredentials: true,
 });
 

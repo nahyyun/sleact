@@ -9,6 +9,13 @@ export const WorkspaceSidebarWrapper = styled.div`
   flex: 1;
 `;
 
+export const ChannelAndDMWrapper = styled.section`
+  width: 260px;
+  background: #3f0e40;
+  color: rgb(188, 171, 188);
+  vertical-align: top;
+`;
+
 export const WorkspaceModal = styled.div`
   padding: 10px 0 0;
 

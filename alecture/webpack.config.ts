@@ -1,7 +1,7 @@
 import path from 'path';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
-import webpack, { Configuration as WebpackConfiguration } from "webpack";
-import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
+import webpack, { Configuration as WebpackConfiguration } from 'webpack';
+import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 interface Configuration extends WebpackConfiguration {
@@ -19,12 +19,14 @@ const config: Configuration = {
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     alias: {
+      '@apis': path.resolve(__dirname, 'apis'),
       '@hooks': path.resolve(__dirname, 'hooks'),
       '@components': path.resolve(__dirname, 'components'),
       '@layouts': path.resolve(__dirname, 'layouts'),
       '@pages': path.resolve(__dirname, 'pages'),
       '@utils': path.resolve(__dirname, 'utils'),
-      '@typings': path.resolve(__dirname, 'typings'),
+      '@types': path.resolve(__dirname, 'types'),
+      '@assets': path.resolve(__dirname, 'assets'),
     },
   },
   entry: {
@@ -58,6 +60,10 @@ const config: Configuration = {
       {
         test: /\.css?$/,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: 'file-loader',
       },
     ],
   },

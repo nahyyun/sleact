@@ -11,12 +11,14 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
+      "@apis/*": ["apis/*"],
       "@hooks/*": ["hooks/*"],
       "@components/*": ["components/*"],
       "@layouts/*": ["layouts/*"],
       "@pages/*": ["pages/*"],
       "@utils/*": ["utils/*"],
-      "@typings/*": ["typings/*"]
+      "@types/*": ["types/*"],
+      "@assets/*": ["assets/*"]
     }
   },
   "ts-node": {
