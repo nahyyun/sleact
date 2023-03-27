@@ -1,6 +1,10 @@
 import styled from '@emotion/styled';
 
-export const WorkspaceWrapper = styled.div`
+export const WorkspaceContainer = styled.div`
+  display: flex;
+`;
+
+export const WorkspaceSidebarWrapper = styled.div`
   display: flex;
   flex: 1;
 `;

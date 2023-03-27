@@ -2,25 +2,24 @@ import InputWithLabel from '@components/common/InputWithLabel';
 import { Modal } from '@components/common/Modal';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import useWorkspace from '@hooks/useWorkspace';
 import Button from '@components/common/Button';
+import useChannel from '@hooks/useChannel';
 
 interface InviteChannelModalProps {
-  workspace: string;
   isOpen: boolean;
   onCloseModal: () => void;
 }
 
-const InviteChannelModal = ({ workspace, isOpen, onCloseModal }: InviteChannelModalProps) => {
+const InviteChannelModal = ({ isOpen, onCloseModal }: InviteChannelModalProps) => {
   const { register, handleSubmit } = useForm({
     mode: 'onSubmit',
     defaultValues: { email: '' },
   });
 
-  //const { inviteChannel } = useWorkspace();
+  const { inviteChannel } = useChannel();
 
-  const onSubmit = handleSubmit((formData) => {
-    //  inviteChannel(workspace, formData);
+  const onSubmit = handleSubmit((data) => {
+    inviteChannel(data);
     onCloseModal();
   });
 

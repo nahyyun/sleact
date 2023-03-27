@@ -1,6 +1,6 @@
 import axiosInstance from '../apis';
 import React from 'react';
-import { IWorkspace, IWorkspaceForm, IInviteWorkspaceForm } from '../types';
+import { IWorkspace, IWorkspaceForm, IInviteForm } from '../types';
 
 const useWorkspace = () => {
   const createWorkspace = async (data: IWorkspaceForm) => {
@@ -11,7 +11,7 @@ const useWorkspace = () => {
     }
   };
 
-  const inviteWorkspace = async (workspace: string, data: IInviteWorkspaceForm) => {
+  const inviteWorkspace = async (workspace: string, data: IInviteForm) => {
     try {
       await axiosInstance.post<IWorkspace>(
         `/workspaces/${workspace}/members

@@ -15,13 +15,15 @@ export interface IWorkspaceForm {
   url: string;
 }
 
-export interface IInviteWorkspaceForm {
+export interface IInviteForm {
   email: string;
 }
 
 export interface IChannelForm {
   name: string;
 }
+
+export type SuccessResponse = 'ok';
 
 export interface IUser {
   id: number;

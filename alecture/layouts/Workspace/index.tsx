@@ -1,11 +1,11 @@
 import Button from '@components/common/Button';
 import React from 'react';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '@hooks/useAuth';
 import * as S from './style';
 import { Outlet, useParams } from 'react-router-dom';
 import Header from '@layouts/Header';
 import Workspaces from '@components/Workspaces';
-import Channel from '@components/ChannelWrapper';
+import ChannelWrapper from '@components/ChannelWrapper';
 
 const Workspace = () => {
   const {
@@ -18,17 +18,17 @@ const Workspace = () => {
   const match = userInfo?.Workspaces.find((ws) => ws.name === workspace);
 
   return (
-    <div>
+    <S.WorkspaceContainer>
       <Header />
-      <S.WorkspaceWrapper>
+      <S.WorkspaceSidebarWrapper>
         <Workspaces />
-        {match && <Channel />}
+        {match && <ChannelWrapper />}
         <S.Chats>chats</S.Chats>
-      </S.WorkspaceWrapper>
+      </S.WorkspaceSidebarWrapper>
 
       <Button onClick={logout}>로그아웃</Button>
       {match && <Outlet />}
-    </div>
+    </S.WorkspaceContainer>
   );
 };
 

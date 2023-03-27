@@ -13,7 +13,6 @@ import { useParams } from 'react-router-dom';
 import useFetch from '@hooks/useFetch';
 import { IChannel } from '../../types';
 import InviteWorkspaceModal from '@components/ChannelWrapper/InviteWorkspaceModal';
-import InviteChannelModal from '@components/ChannelWrapper/InviteChannelModal';
 import ChannelList from '@components/ChannelWrapper/ChannelList';
 
 const ChannelWrrpaer = () => {
@@ -45,8 +44,8 @@ const ChannelWrrpaer = () => {
     openInviteWSModal();
   };
 
-  const onSubmit = handleSubmit(async (formData) => {
-    await createChannel(workspace, formData);
+  const onSubmit = handleSubmit(async (data) => {
+    await createChannel(data);
     fetch();
     closeCreateChannelModal();
   });
@@ -84,7 +83,6 @@ const ChannelWrrpaer = () => {
       </Modal>
 
       <InviteWorkspaceModal workspace={workspace} isOpen={isInviteWSModalOpen} onCloseModal={closeInviteWSModal} />
-      <InviteChannelModal workspace={workspace} isOpen={isInviteWSModalOpen} onCloseModal={closeInviteWSModal} />
     </>
   );
 };

@@ -1,9 +1,12 @@
 import axiosInstance from '../apis';
 import React from 'react';
-import { IChannel, IChannelForm } from 'types';
+import { IChannel, IChannelForm, IInviteForm, SuccessResponse } from 'types';
+import { useParams } from 'react-router-dom';
 
 const useChannel = () => {
-  const createChannel = async (workspace: string, data: IChannelForm) => {
+  const { workspace, channel } = useParams();
+
+  const createChannel = async (data: IChannelForm) => {
     try {
       await axiosInstance.post<IChannel>(`/workspaces/${workspace}/channels`, data);
     } catch (error) {
@@ -11,9 +14,9 @@ const useChannel = () => {
     }
   };
 
-  const inviteChannel = async (workspace: string, channel: string, data: IChannelForm) => {
+  const inviteChannel = async (data: IInviteForm) => {
     try {
-      await axiosInstance.post<'ok'>(`//workspaces/${workspace}/channels/${channel}/members`, data);
+      await axiosInstance.post<SuccessResponse>(`/workspaces/${workspace}/channels/${channel}/members`, data);
     } catch (error) {
       console.log(error);
     }
