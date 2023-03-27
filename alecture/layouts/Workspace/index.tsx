@@ -27,7 +27,7 @@ const Workspace = () => {
         {match && (
           <S.ChannelAndDMWrapper>
             <ChannelWrapper />
-            <DMList workspace={workspace} />
+            <DMList userInfo={userInfo} workspace={workspace} />
           </S.ChannelAndDMWrapper>
         )}
         <S.Chats>chats</S.Chats>
