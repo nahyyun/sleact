@@ -5,7 +5,7 @@ import * as S from './style';
 import { Outlet, useParams } from 'react-router-dom';
 import Header from '@layouts/Header';
 import Workspaces from '@components/Workspaces';
-import Channel from '@components/Channel';
+import Channel from '@components/ChannelWrapper';
 
 const Workspace = () => {
   const {

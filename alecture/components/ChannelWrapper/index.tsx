@@ -12,11 +12,11 @@ import useChannel from '@hooks/useChannel';
 import { useParams } from 'react-router-dom';
 import useFetch from '@hooks/useFetch';
 import { IChannel } from '../../types';
-import InviteWorkspaceModal from '@components/Channel/InviteWorkspaceModal';
-import InviteChannelModal from '@components/Channel/InviteChannelModal';
-import ChannelList from '@components/Channel/ChannelList';
+import InviteWorkspaceModal from '@components/ChannelWrapper/InviteWorkspaceModal';
+import InviteChannelModal from '@components/ChannelWrapper/InviteChannelModal';
+import ChannelList from '@components/ChannelWrapper/ChannelList';
 
-const Channel = () => {
+const ChannelWrrpaer = () => {
   const { isOpen: isMenuOpen, openMenu: openChannelMenu, closeMenu: closeChannelMenu } = useMenu();
   const {
     isOpen: isCreateChannelModalOpen,
@@ -69,7 +69,7 @@ const Channel = () => {
               </Menu.Item>
             </Menu.Items>
           </Menu>
-          <ChannelList channels={channels} />
+          <ChannelList workspace={workspace} channels={channels} />
         </S.MenuScroll>
       </S.Channels>
 
@@ -89,4 +89,4 @@ const Channel = () => {
   );
 };
 
-export default Channel;
+export default ChannelWrrpaer;
