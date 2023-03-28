@@ -20,22 +20,28 @@ const Workspace = () => {
   const match = userInfo?.Workspaces.find((ws) => ws.name === workspace);
 
   return (
-    <S.WorkspaceContainer>
+    <>
       <Header />
-      <S.WorkspaceSidebarWrapper>
-        <Workspaces />
-        {match && (
-          <S.ChannelAndDMWrapper>
-            <ChannelWrapper />
-            <DMList userInfo={userInfo} workspace={workspace} />
-          </S.ChannelAndDMWrapper>
-        )}
-        <S.Chats>chats</S.Chats>
-      </S.WorkspaceSidebarWrapper>
+      <S.WorkspaceContainer>
+        <S.WorkspaceSidebarWrapper>
+          <Workspaces />
+          {match && (
+            <S.ChannelAndDMWrapper>
+              <ChannelWrapper />
+              <DMList userInfo={userInfo} workspace={workspace} />
+            </S.ChannelAndDMWrapper>
+          )}
+          {/* <S.Chats>chats</S.Chats> */}
+        </S.WorkspaceSidebarWrapper>
 
-      <Button onClick={logout}>로그아웃</Button>
-      {match && <Outlet />}
-    </S.WorkspaceContainer>
+        {/* <Button onClick={logout}>로그아웃</Button> */}
+        {match && (
+          <S.ContentsWrapper>
+            <Outlet />
+          </S.ContentsWrapper>
+        )}
+      </S.WorkspaceContainer>
+    </>
   );
 };
 

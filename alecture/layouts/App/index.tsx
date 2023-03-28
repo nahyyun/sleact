@@ -8,6 +8,7 @@ import PublicRouter from '@components/Router/PublicRouter';
 const SignUp = loadable(() => import('@pages/SignUp'));
 const Login = loadable(() => import('@pages/Login'));
 const Channel = loadable(() => import('@pages/Channel'));
+const DirectMessage = loadable(() => import('@pages/DirectMessage'));
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path=":workspace">
             <Route index element={<div>채널이 없습니다. 채널을 추가해주세요.</div>} />
             <Route path="channel/:channel" element={<Channel />} />
+            <Route path="dm/:id" element={<DirectMessage />} />
           </Route>
           <Route index element={<div>워크스페이스가 없습니다. 워크 스페이스를 추가해주세요.</div>} />
         </Route>

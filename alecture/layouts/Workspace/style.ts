@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 
 export const WorkspaceContainer = styled.div`
   display: flex;
+  width: 100%;
 `;
 
 export const WorkspaceSidebarWrapper = styled.div`
   display: flex;
-  flex: 1;
 `;
 
 export const ChannelAndDMWrapper = styled.section`
@@ -40,4 +40,8 @@ export const WorkspaceModal = styled.div`
 
 export const Chats = styled.div`
   flex: 1;
+`;
+
+export const ContentsWrapper = styled.section`
+  width: 100%;
 `;

@@ -14,7 +14,7 @@ const DMList = ({ userInfo, workspace }: { userInfo: IUser | null; workspace: st
   return (
     <S.DMListWrapper>
       {workspaceMembers?.map((member) => (
-        <NavLink to={`workspace/${workspace}/dm/${member.id}`} key={member.id}>
+        <NavLink to={`/workspace/${workspace}/dm/${member.id}`} key={member.id}>
           <S.StatusIcon src={offlineIcon} />
           <span>
             {userInfo.nickname}

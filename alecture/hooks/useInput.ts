@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 
-const useInput = <T>(defaultValue: T) => {
+const useInput = <T>(
+  defaultValue: T | (() => T),
+): [T, (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void, Dispatch<SetStateAction<T>>] => {
   const [state, setState] = useState(defaultValue);
 
-  const onChange = (value: React.SetStateAction<T>) => {
-    setState(value);
+  const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setState(event.target.value as unknown as T);
   };
 
   return [state, onChange, setState];
