@@ -2,11 +2,19 @@ import React, { useState } from 'react';
 import { Mention, OnChangeHandlerFunc, SuggestionDataItem } from 'react-mentions';
 import ProfileInfo from '@components/common/ProfileInfo';
 import Button from '@components/common/Button';
-import { IUser } from '../../types';
+import { IDM, IUser } from '../../types';
 import * as S from './style';
+import useChat from './hook/useChat';
 
-const ChatBox = ({ memberList }: { memberList: IUser[] }) => {
+interface ChatBoxProps {
+  memberList: IUser[];
+  fetchChatList: () => Promise<IDM[]>;
+}
+
+const ChatBox = ({ memberList, fetchChatList }: ChatBoxProps) => {
   const [chatValue, setChatValue] = useState('');
+
+  const { chat } = useChat();
 
   const onChangeChatValue: OnChangeHandlerFunc = (e) => {
     setChatValue(e.target.value);
@@ -28,7 +36,13 @@ const ChatBox = ({ memberList }: { memberList: IUser[] }) => {
     );
   };
 
-  const onSubmit = () => {};
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!chatValue.trim()) return;
+
+    await chat(chatValue);
+    fetchChatList();
+  };
 
   return (
     <S.ChatBoxContainer>
@@ -37,7 +51,7 @@ const ChatBox = ({ memberList }: { memberList: IUser[] }) => {
           <Mention trigger="@" data={mentionMemberList} renderSuggestion={renderSuggestion} />
         </S.MentionTextareaWrapper>
         <S.Toolbox>
-          <Button>전송</Button>
+          <Button type="submit">전송</Button>
         </S.Toolbox>
       </form>
     </S.ChatBoxContainer>

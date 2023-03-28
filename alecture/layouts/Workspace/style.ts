@@ -44,4 +44,6 @@ export const Chats = styled.div`
 
 export const ContentsWrapper = styled.section`
   width: 100%;
+  display: flex;
+  flex-direction: column;
 `;

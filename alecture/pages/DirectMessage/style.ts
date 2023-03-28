@@ -5,7 +5,14 @@ export const Header = styled.header`
   display: flex;
   --saf-0: rgba(var(--sk_foreground_low, 29, 28, 29), 0.13);
   box-shadow: 0 1px 0 var(--saf-0);
-  padding: 20px 16px 20px 20px;
+  padding: 10px;
   font-weight: bold;
   align-items: center;
+`;
+
+export const ContentsContainer = styled.section`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  position: relative;
 `;

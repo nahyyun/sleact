@@ -1,5 +1,6 @@
 import axiosInstance from '../apis';
 import { useEffect, useReducer } from 'react';
+import { AxiosRequestConfig } from 'axios';
 
 interface IReducerState<T> {
   isLoading: boolean;
@@ -43,6 +44,7 @@ const fetchReducer = <T>(state: IReducerState<T>, action: Action<T>): IReducerSt
 
 const useFetch = <T>(
   url: string,
+  params?: any,
 ): {
   isLoading: boolean;
   responseData: T;
@@ -54,7 +56,7 @@ const useFetch = <T>(
     try {
       dispatch({ type: ActionType.LOADING });
 
-      const response = await axiosInstance.get<T>(url);
+      const response = await axiosInstance.get<T>(url, { params });
 
       dispatch({ type: ActionType.FETCHED, payload: response });
 
