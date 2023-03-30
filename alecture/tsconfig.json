@@ -13,6 +13,7 @@
     "paths": {
       "@apis/*": ["apis/*"],
       "@hooks/*": ["hooks/*"],
+      "@contexts/*": ["contexts/*"],
       "@components/*": ["components/*"],
       "@layouts/*": ["layouts/*"],
       "@pages/*": ["pages/*"],

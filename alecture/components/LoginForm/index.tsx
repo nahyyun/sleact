@@ -1,10 +1,10 @@
 import InputWithLabel from '@components/common/InputWithLabel';
 import React from 'react';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '@hooks/useAuth';
 import { ILoginForm } from 'types';
 import Button from '@components/common/Button';
 import { useForm } from 'react-hook-form';
-import RegisterOptions from '../../utils/registerOptions';
+import RegisterOptions from '@utils/registerOptions';
 import * as S from './style';
 
 const LoginForm = () => {

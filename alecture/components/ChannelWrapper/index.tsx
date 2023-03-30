@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import * as S from './style';
 import useModal from '@hooks/useModal';
 import { Modal } from '@components/common/Modal';
@@ -14,6 +14,8 @@ import useFetch from '@hooks/useFetch';
 import { IChannel } from '../../types';
 import InviteWorkspaceModal from '@components/ChannelWrapper/InviteWorkspaceModal';
 import ChannelList from '@components/ChannelWrapper/ChannelList';
+import useSocket from '@hooks/useSocket';
+import { OnlineMemeberContext } from '@contexts/OnlineMemberContext';
 
 const ChannelWrrpaer = () => {
   const { isOpen: isMenuOpen, openMenu: openChannelMenu, closeMenu: closeChannelMenu } = useMenu();
@@ -24,12 +26,17 @@ const ChannelWrrpaer = () => {
   } = useModal();
   const { isOpen: isInviteWSModalOpen, openModal: openInviteWSModal, closeModal: closeInviteWSModal } = useModal();
 
-  const { logout } = useAuth();
+  const {
+    logout,
+    user: { userInfo },
+  } = useAuth();
   const { createChannel } = useChannel();
 
   const { workspace } = useParams<{ workspace: string }>() as { workspace: string };
 
   const { fetch, responseData: channels } = useFetch<IChannel[]>(`/workspaces/${workspace}/channels`);
+
+  const { loginSocket, getOnlineListSocket, disconnect } = useSocket();
 
   const { register, handleSubmit } = useForm({
     mode: 'onSubmit',
@@ -49,6 +56,19 @@ const ChannelWrrpaer = () => {
     fetch();
     closeCreateChannelModal();
   });
+
+  const { onlineMembers, setonlineMembers } = useContext(OnlineMemeberContext);
+
+  useEffect(() => {
+    if (!channels || !userInfo) return;
+
+    loginSocket(
+      userInfo.id,
+      channels?.map((channel) => channel.id),
+    );
+
+    getOnlineListSocket(setonlineMembers);
+  }, [channels]);
 
   return (
     <>
