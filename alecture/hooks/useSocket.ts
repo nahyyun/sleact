@@ -1,35 +1,60 @@
-import React, { useEffect } from 'react';
-import io from 'socket.io-client';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import socket from '../socket';
 
 const useSocket = () => {
   const { workspace } = useParams<{ workspace: string }>() as { workspace: string };
 
-  const URL = process.env.NODE_ENV === 'production' ? '' : `http://localhost:3095/ws-${workspace}`;
+  const socketRef = useRef(socket(workspace));
 
-  const socket = io(URL, { transports: ['websocket'] });
+  const [isConnected, setIsConnected] = useState(socketRef.current.connected);
+
+  const onConnect = () => {
+    setIsConnected(true);
+  };
+
+  const onDisConnect = () => {
+    setIsConnected(false);
+  };
 
   const loginSocket = (id: number, channels: number[]) => {
-    socket.emit('login', { id, channels });
+    socketRef.current.emit('login', { id, channels });
   };
 
   const getOnlineListSocket = (listener: (memberList: number[]) => void) => {
-    socket.on('onlineList', (memberList) => listener(memberList));
+    socketRef.current.on('onlineList', (memberList) => {
+      console.log('로그인되어 있는 멤버들', memberList);
+      listener(memberList);
+    });
+  };
+
+  const emitChannelChatSocket = () => {
+    socketRef.current.on('message', (chatData) => {
+      console.log(chatData);
+    });
   };
 
   const disconnect = () => {
-    socket.disconnect();
+    socketRef.current.disconnect();
+    setIsConnected(false);
   };
 
   useEffect(() => {
-    socket.on('connect', () => console.log('connected'));
+    socketRef.current.on('connect', onConnect);
 
     return () => {
-      socket.off('connect', () => console.log('connect listener remove'));
+      socketRef.current.off('connect');
     };
   }, []);
 
-  return { socket, loginSocket, getOnlineListSocket, disconnect };
+  return {
+    socket: socketRef.current,
+    isConnected,
+    loginSocket,
+    getOnlineListSocket,
+    emitChannelChatSocket,
+    disconnect,
+  };
 };
 
 export default useSocket;

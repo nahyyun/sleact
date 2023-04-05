@@ -10,3 +10,10 @@ export const Header = styled.header`
   font-weight: bold;
   align-items: center;
 `;
+
+export const ContentsContainer = styled.section`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  position: relative;
+`;

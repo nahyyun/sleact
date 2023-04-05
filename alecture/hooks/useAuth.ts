@@ -4,7 +4,6 @@ import { ISignUpForm, ILoginForm } from '../types';
 import useRouter from './useRouter';
 import { AuthContext } from '@contexts/AuthContext';
 import { IUser } from '../types';
-import useSocket from '@hooks/useSocket';
 
 type SuccessResponse = 'ok';
 
@@ -16,8 +15,6 @@ const useAuth = () => {
   } = useContext(AuthContext);
 
   const { routeTo } = useRouter();
-
-  const { socket, disconnect } = useSocket();
 
   const signUp = async (formData: Omit<ISignUpForm, 'passwordCheck'>) => {
     try {

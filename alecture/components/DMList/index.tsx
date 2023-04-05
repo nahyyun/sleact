@@ -24,7 +24,7 @@ const DMList = ({ userInfo, workspace }: { userInfo: IUser | null; workspace: st
             <S.StatusIcon src={offlineIcon} />
           )}
           <span>
-            {userInfo.nickname}
+            {member.nickname}
             {member.id === userInfo.id ? '(나)' : ''}
           </span>
         </NavLink>

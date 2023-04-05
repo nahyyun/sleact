@@ -2,19 +2,17 @@ import React, { useState } from 'react';
 import { Mention, OnChangeHandlerFunc, SuggestionDataItem } from 'react-mentions';
 import ProfileInfo from '@components/common/ProfileInfo';
 import Button from '@components/common/Button';
-import { IDM, IUser } from '../../types';
+import { IDM, IUser, SuccessResponse } from '../../types';
 import * as S from './style';
-import useChat from './hook/useChat';
 
-interface ChatBoxProps {
+interface ChatBoxProps<T> {
   memberList: IUser[];
-  fetchChatList: () => Promise<IDM[]>;
+  fetchChatList: () => Promise<T[]>;
+  submitCallback: (formData: string) => Promise<SuccessResponse> | undefined;
 }
 
-const ChatBox = ({ memberList, fetchChatList }: ChatBoxProps) => {
+const ChatBox = <T,>({ memberList, fetchChatList, submitCallback }: ChatBoxProps<T>) => {
   const [chatValue, setChatValue] = useState('');
-
-  const { chat } = useChat();
 
   const onChangeChatValue: OnChangeHandlerFunc = (e) => {
     setChatValue(e.target.value);
@@ -40,7 +38,7 @@ const ChatBox = ({ memberList, fetchChatList }: ChatBoxProps) => {
     e.preventDefault();
     if (!chatValue.trim()) return;
 
-    await chat(chatValue);
+    await submitCallback(chatValue);
     fetchChatList();
   };
 

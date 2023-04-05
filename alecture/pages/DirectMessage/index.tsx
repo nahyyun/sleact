@@ -7,6 +7,7 @@ import { IDM, IUser } from '../../types';
 import ChatList from '@components/ChatList';
 import ChatBox from '@components/ChatBox';
 import * as S from './style';
+import useChat from '@components/ChatBox/hook/useChat';
 
 const DirectMessage = () => {
   const { workspace, id } = useParams();
@@ -20,6 +21,8 @@ const DirectMessage = () => {
     user: { userInfo },
   } = useAuth();
 
+  const { sendDmChat } = useChat();
+
   return (
     <>
       <S.Header>
@@ -28,8 +31,8 @@ const DirectMessage = () => {
         </ProfileInfo>
       </S.Header>
       <S.ContentsContainer>
-        <ChatList />
-        <ChatBox fetchChatList={fetchChatList} memberList={memberList} />
+        <ChatList chatList={chatList} />
+        <ChatBox fetchChatList={fetchChatList} memberList={memberList} submitCallback={sendDmChat} />
       </S.ContentsContainer>
     </>
   );

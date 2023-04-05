@@ -36,7 +36,7 @@ const ChannelWrrpaer = () => {
 
   const { fetch, responseData: channels } = useFetch<IChannel[]>(`/workspaces/${workspace}/channels`);
 
-  const { loginSocket, getOnlineListSocket, disconnect } = useSocket();
+  const { socket, isConnected, loginSocket, getOnlineListSocket, disconnect } = useSocket();
 
   const { register, handleSubmit } = useForm({
     mode: 'onSubmit',
@@ -60,7 +60,8 @@ const ChannelWrrpaer = () => {
   const { onlineMembers, setonlineMembers } = useContext(OnlineMemeberContext);
 
   useEffect(() => {
-    if (!channels || !userInfo) return;
+    console.log(isConnected);
+    if (!channels || !userInfo || !socket.connected) return;
 
     loginSocket(
       userInfo.id,
@@ -68,7 +69,16 @@ const ChannelWrrpaer = () => {
     );
 
     getOnlineListSocket(setonlineMembers);
-  }, [channels]);
+
+    return () => {
+      socket.off('login');
+      socket.off('onlineList');
+    };
+  }, [channels, userInfo, socket]);
+
+  // useEffect(() => {
+  //   disconnect();
+  // }, [workspace]);
 
   return (
     <>
