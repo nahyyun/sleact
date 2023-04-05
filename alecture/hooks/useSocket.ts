@@ -13,10 +13,6 @@ const useSocket = () => {
     setIsConnected(true);
   };
 
-  const onDisConnect = () => {
-    setIsConnected(false);
-  };
-
   const loginSocket = (id: number, channels: number[]) => {
     socketRef.current.emit('login', { id, channels });
   };
@@ -44,6 +40,7 @@ const useSocket = () => {
 
     return () => {
       socketRef.current.off('connect');
+      disconnect();
     };
   }, []);
 
