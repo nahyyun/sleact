@@ -1,23 +1,14 @@
-import useFetch from '@hooks/useFetch';
 import React from 'react';
 import * as S from './style';
-import { useParams } from 'react-router';
 import Chat from '@components/Chat';
 
-type ChatDataType = {
-  id: number;
-  content: string;
-  createdAt: Date;
-};
+interface ChatListProps<T> {
+  chatList: T[];
+  render: (chatItem: T) => React.ReactNode;
+}
 
-const ChatList = <T extends ChatDataType>({ chatList }: { chatList: T[] }) => {
-  return (
-    <S.ChatListContainer>
-      {chatList?.map((chat) => (
-        <Chat key={chat.id} content={chat.content}></Chat>
-      ))}
-    </S.ChatListContainer>
-  );
+const ChatList = <T,>({ chatList, render }: ChatListProps<T>) => {
+  return <S.ChatListContainer>{chatList?.map((chat) => render(chat))}</S.ChatListContainer>;
 };
 
 export default ChatList;

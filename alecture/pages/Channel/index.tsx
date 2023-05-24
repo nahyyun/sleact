@@ -9,15 +9,15 @@ import useFetch from '@hooks/useFetch';
 import { IUser, IChat } from '../../types';
 import * as S from './style';
 import useChat from '@components/ChatBox/hook/useChat';
+import ChannelChat from '@components/Chat/ChannelChat';
 
 const Channel = () => {
   const { workspace, channel } = useParams();
-
   const { responseData: chatList, fetch: fetchChatList } = useFetch<IChat[]>(
     `/workspaces/${workspace}/channels/${channel}/chats`,
     {
-      perPage: 5,
-      page: 10,
+      perPage: 4,
+      page: 1,
     },
   );
   const { responseData: memberList } = useFetch<IUser[]>(`/workspaces/${workspace}/members`);
@@ -35,7 +35,7 @@ const Channel = () => {
         </Button>
       </S.Header>
       <S.ContentsContainer>
-        <ChatList chatList={chatList} />
+        <ChatList chatList={chatList} render={(chatItem) => <ChannelChat key={chatItem.id} chatItem={chatItem} />} />
         <ChatBox fetchChatList={fetchChatList} memberList={memberList} submitCallback={sendChannelChat} />
       </S.ContentsContainer>
       <InviteChannelModal isOpen={isOpen} onCloseModal={closeModal} />

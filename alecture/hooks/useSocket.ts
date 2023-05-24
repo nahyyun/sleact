@@ -19,7 +19,6 @@ const useSocket = () => {
 
   const getOnlineListSocket = (listener: (memberList: number[]) => void) => {
     socketRef.current.on('onlineList', (memberList) => {
-      console.log('로그인되어 있는 멤버들', memberList);
       listener(memberList);
     });
   };

@@ -31,7 +31,7 @@ const DirectMessage = () => {
         </ProfileInfo>
       </S.Header>
       <S.ContentsContainer>
-        <ChatList chatList={chatList} />
+        {/* <ChatList chatList={chatList} /> */}
         <ChatBox fetchChatList={fetchChatList} memberList={memberList} submitCallback={sendDmChat} />
       </S.ContentsContainer>
     </>
